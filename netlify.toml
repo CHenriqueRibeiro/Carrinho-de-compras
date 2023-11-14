@@ -1,0 +1,3 @@
+[build]
+  command = "yarn dev"
+  publish = "public" # ou o diretório correspondente ao servidor de desenvolvimento
