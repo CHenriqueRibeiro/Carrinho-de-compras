@@ -83,6 +83,7 @@ export const DeleteButton = styled.img`
   position: absolute;
   top: -5px;
   right: -5px;
+  cursor: pointer;
 `;
 export const ImgProductCart = styled.img`
   width: 20%;
@@ -102,14 +103,13 @@ export const DescriptionProduct = styled.p`
   font-weight: 400;
   line-height: 17px;
   letter-spacing: 0px;
-  text-align: left;
 `;
 export const ContentQuantityButtons = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  width: 30%;
+  width: 23%;
   height: 70%;
   padding: 0.4rem;
   gap: 0.3rem;
@@ -144,6 +144,7 @@ export const CalculatorButton = styled.p`
   font-size: 18px;
   font-weight: 600;
   line-height: 10px;
+  cursor: pointer;
 `;
 
 export const ValueProduct = styled.p`

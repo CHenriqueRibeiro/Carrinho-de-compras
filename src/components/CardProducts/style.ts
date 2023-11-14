@@ -75,7 +75,7 @@ export const Container = styled.div`
           height: 2rem;
           width: 3.5rem;
           background-color: #373737;
-          border-radius: 8px;
+          border-radius: 8px; cursor: auto;
 
           p {
             color: #ffffff;

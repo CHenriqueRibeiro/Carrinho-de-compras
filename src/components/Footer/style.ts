@@ -7,7 +7,7 @@ export const Container = styled.div`
   justify-content: center;
   background: #eeeeee;
   width: 100%;
-  height: 2rem;
+  height: 5%;
   font-family: "Montserrat", sans-serif;
   p {
     font-size: 12px;

@@ -8,7 +8,7 @@ export const Container = styled.div`
   background: #0f52ba;
   color: #ffffff;
   width: 100%;
-  height: 6rem;
+  height: 10%;
 `;
 export const HeaderContainer = styled.div`
   display: flex;

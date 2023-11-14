@@ -27,11 +27,24 @@ import CloseCart from "../../assets/Close_cart.svg";
 import { useApi } from "../../Context/UseContext";
 
 const SideBar = () => {
-    const { cart, isOpen, setIsOpen, closeSidebar } = useApi();
+  const {
+    cart,
+    isOpen,
+    setIsOpen,
+    closeSidebar,
+    removeFromCart,
+    decreaseQuantity,
+    increaseQuantity,
+  } = useApi();
 
-    const handleCloseButtonClick = () => {
-      closeSidebar();
-    };
+  const handleCloseButtonClick = () => {
+    closeSidebar();
+  };
+  const calculateTotalValue = () => {
+  const totalValue = cart.reduce((total, item) => total + item.total!,0);
+  return totalValue.toLocaleString("pt-BR", { minimumFractionDigits: 2 });
+};
+
 
   return (
     <Container isOpen={isOpen} setIsOpen={setIsOpen}>
@@ -45,7 +58,10 @@ const SideBar = () => {
         <ProductsCart>
           {cart.map((item) => (
             <ProductsContainer key={item.id}>
-              <DeleteButton src={CloseCart} />
+              <DeleteButton
+                onClick={() => removeFromCart(item.id)}
+                src={CloseCart}
+              />
               <ImgProductCart src={item.photo} alt="imagem do produto" />
               <ProductType>
                 <DescriptionProduct>{item.name}</DescriptionProduct>
@@ -53,18 +69,22 @@ const SideBar = () => {
               <ContentQuantityButtons>
                 <TextQuantity>Qtd:</TextQuantity>
                 <QuantityButtons>
-                  <CalculatorButton>-</CalculatorButton>
-                  <QuantityValue>0</QuantityValue>
-                  <CalculatorButton>+</CalculatorButton>
+                  <CalculatorButton onClick={() => decreaseQuantity(item.id)}>
+                    -
+                  </CalculatorButton>
+                  <QuantityValue>{item.quantity}</QuantityValue>
+                  <CalculatorButton onClick={() => increaseQuantity(item.id)}>
+                    +
+                  </CalculatorButton>
                 </QuantityButtons>
               </ContentQuantityButtons>
-              <ValueProduct>{`R$${item.price.slice(0, 3)}`}</ValueProduct>
+              <ValueProduct>{`R$${item.total.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, '.')}`}</ValueProduct>
             </ProductsContainer>
           ))}
         </ProductsCart>
         <ValueTotal>
           <TextValue>Total:</TextValue>
-          <Value>R$ 700</Value>
+          <Value>{`R$ ${calculateTotalValue()}`}</Value>
         </ValueTotal>
       </ContentSideBar>
       <FooterSideBar>

@@ -7,7 +7,7 @@ export const Container = styled.div`
   justify-content: space-around;
   color: #ffffff;
   width: 100%;
-  height: 100%;
+  height: 85%;
 `;
 
 export const ContainerProducts = styled.div`

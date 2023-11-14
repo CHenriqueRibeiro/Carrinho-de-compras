@@ -15,6 +15,8 @@ interface Product {
   description: string;
   photo: string;
   price: string;
+  quantity: number;
+  total: number;
 }
 
 interface ApiContextProps {
@@ -25,7 +27,10 @@ interface ApiContextProps {
   closeSidebar: () => void;
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
-  getCartItemCount: () => number; // Nova propriedade para obter a quantidade de itens no carrinho
+  getCartItemCount: () => number;
+  increaseQuantity: (productId: number) => void;
+  decreaseQuantity: (productId: number) => void;
+  removeFromCart: (productId: number) => void;
 }
 
 const ApiContext = createContext<ApiContextProps | undefined>(undefined);
@@ -64,8 +69,64 @@ export const ApiProvider: React.FC<{ children: ReactNode }> = ({
     }
   };
 
+  // ...
   const addToCart = (product: Product) => {
-    setCart((prevCart) => [...prevCart, product]);
+    const existingProduct = cart.find((item) => item.id === product.id);
+
+    if (existingProduct) {
+      setCart((prevCart) =>
+        prevCart.map((item) =>
+          item.id === product.id
+            ? {
+                ...item,
+                quantity: item.quantity + 1,
+                total: calculateTotal(item.price, item.quantity + 1),
+              }
+            : item
+        )
+      );
+    } else {
+      setCart((prevCart) => [
+        ...prevCart,
+        { ...product, quantity: 1, total: calculateTotal(product.price, 1) },
+      ]);
+    }
+  };
+  const calculateTotal = (price: string, quantity: number) => {
+    const numericPrice = parseFloat(price.replace("R$", "").replace(",", "."));
+    return numericPrice * quantity;
+  };
+
+  const increaseQuantity = (productId: number) => {
+    setCart((prevCart) =>
+      prevCart.map((item) =>
+        item.id === productId
+          ? {
+              ...item,
+              quantity: item.quantity + 1,
+              total: calculateTotal(item.price, item.quantity + 1),
+            }
+          : item
+      )
+    );
+  };
+
+  const decreaseQuantity = (productId: number) => {
+    setCart((prevCart) =>
+      prevCart.map((item) =>
+        item.id === productId && item.quantity > 1
+          ? {
+              ...item,
+              quantity: item.quantity - 1,
+              total: calculateTotal(item.price, item.quantity - 1),
+            }
+          : item
+      )
+    );
+  };
+
+  const removeFromCart = (productId: number) => {
+    setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
   };
 
   const getCartItemCount = () => {
@@ -83,6 +144,9 @@ export const ApiProvider: React.FC<{ children: ReactNode }> = ({
     setIsOpen,
     closeSidebar: () => setIsOpen(false),
     getCartItemCount,
+    increaseQuantity,
+    decreaseQuantity,
+    removeFromCart,
   };
 
   return (
