@@ -37,8 +37,10 @@ export const Logo = styled.div`
   h2 {
     position: relative;
     top: 0.4rem;
+
+    padding-left: 0.7rem;
     font-size: 18px;
-    font-weight: 300;
+    font-weight: 100;
     line-height: 19px;
     letter-spacing: 0px;
   }
@@ -55,6 +57,7 @@ export const ContainerShoppingCart = styled.div`
   background-color: #ffffff;
   gap: 4px;
   padding-left: 0.8rem;
+  cursor: pointer;
 
   img {
     width: 40%;

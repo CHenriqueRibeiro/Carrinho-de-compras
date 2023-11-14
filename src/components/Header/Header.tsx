@@ -1,3 +1,4 @@
+import { useApi } from "../../Context/UseContext";
 import {
   Container,
   Logo,
@@ -5,7 +6,14 @@ import {
   HeaderContainer,
 } from "./style";
 import ShoppingCart from "../../assets/shoppingCart.svg";
+
 const Header = () => {
+  const { setIsOpen, getCartItemCount } = useApi();
+
+  const handleShoppingCartClick = () => {
+    setIsOpen(true);
+  };
+
   return (
     <Container>
       <HeaderContainer>
@@ -13,9 +21,10 @@ const Header = () => {
           <h1>MKS</h1>
           <h2>Sistemas</h2>
         </Logo>
-        <ContainerShoppingCart>
+        
+        <ContainerShoppingCart onClick={handleShoppingCartClick}>
           <img src={ShoppingCart} alt="Imagem carrinho de compras" />
-          <span>0</span>
+          <span>{getCartItemCount()}</span>
         </ContainerShoppingCart>
       </HeaderContainer>
     </Container>
