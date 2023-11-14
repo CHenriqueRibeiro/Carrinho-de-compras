@@ -10,6 +10,8 @@ interface Product {
   description: string;
   photo: string;
   price: string;
+  quantity: number;
+  total: number;
 }
 
 const CardProducts = () => {
@@ -18,7 +20,11 @@ const CardProducts = () => {
   const { data, isLoading, isError } = useQuery<Product[]>(queryKey, fetchData);
 
   const handleBuyClick = (product: Product) => {
-    addToCart(product);
+    addToCart({
+      ...product,
+      quantity: 1, 
+      total: parseFloat(product.price.replace("R$", "").replace(",", ".")), 
+    });
     console.log("Product added to cart:", product);
   };
 
